@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import shutil
 import helpers
 
 
@@ -41,3 +42,15 @@ def setup_folders(FOLDERS):
             create_folders(FOLDERS["baseFolder"] + "/" + FOLDERS[folder])
 
     input("------ Done creating folders. Press any key. -------")
+
+
+def remove_folder(folderToRemove):
+    """ Deletes baseFolder """
+    try:
+        sure = input("Are you sure you want to delete the folder: '" + folderToRemove + "'? [y/N] ").lower()
+        if sure in ("y", "yes"):
+            shutil.rmtree(folderToRemove, ignore_errors=False, onerror=None)
+        else:
+            pass
+    except FileNotFoundError:
+        print("Folder: '" + folderToRemove + "' is not created.")

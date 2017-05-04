@@ -40,6 +40,8 @@ def menu():
     print("1) Setup folders. Press Enter for default")
     print("2) View default FOLDER")
     print("3) Scan folder")
+    print("4) Start the magic!")
+    print("R) Remove baseFolder")
     print("q) Quit program")
 
 
@@ -64,16 +66,15 @@ def main():
 
         elif choice == "3":
             print("\n### Available folders ###\n")
-            for i, x in enumerate(sorted(FOLDERS.keys())):
-                print(str(i) + ")", x)
+            functions.presentFolders(FOLDERS)
 
-            scan_me = input("Name key of folder to scan: ")
+        elif choice == "4":
+            # print("\n### Available folders ###\n")
+            functions.startSort(FOLDERS)
 
-            if scan_me in FOLDERS:
-                input("Folder exists. Press Enter to scan now.")
-                functions.scan_folder(FOLDERS, scan_me)
-            else:
-                input("Folder does not exist. Press Enter to return to menu.")
+        elif choice == "R":
+            setup.remove_folder(FOLDERS["baseFolder"])
+
 
         else:
             print("Try again.")
