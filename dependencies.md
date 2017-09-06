@@ -10,3 +10,7 @@ sudo pip3 install Pillow
 
 ### Python-magic
 sudo pip3 install python-magic
+
+
+### tree
+sudo apt-get install tree

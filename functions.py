@@ -13,6 +13,8 @@ import re
 import imghdr
 import magic
 
+from shutil import copy2
+
 MONTHS = {
     "01": "Januari",
     "02": "Februari",
@@ -78,7 +80,8 @@ def scan_folder(FOLDERS, scan_me):
     print_structure = input("View structure? [y/N] ").lower()
 
     if print_structure in ("y", "yes"):
-        print(*structure, sep="\n")
+        os.system("tree " + folderPath)
+        # print(*structure, sep="\n")
 
 
 def get_exif(fn):
@@ -88,11 +91,42 @@ def get_exif(fn):
         created["year"] = match.group(1)
         created["month"] = MONTHS[match.group(2)]
 
-    except TypeError:
+    except (TypeError, KeyError):
         pass
 
     return created
 
+
+def create_structure_and_copy(FOLDERS, images):
+    """ Creates the structure from finished images """
+
+    finished_path = FOLDERS["baseFolder"] + "/" + FOLDERS["finishedFolder"]
+    unfinished_path = FOLDERS["baseFolder"] + "/" + FOLDERS["unfinishedFolder"]
+    # print(finished_path)
+
+    for image in images:
+        create_year = image["created"]["year"]
+        create_month = image["created"]["month"]
+
+        # Do the information exist?
+        if create_year is not "NA" and create_month is not "NA":
+            year_path = finished_path + "/" + create_year
+            month_path = year_path + "/" + create_month
+
+            # Create year path folder if not exists
+            if not os.path.exists(year_path):
+                os.makedirs(year_path)
+                print("Created folder:", year_path)
+
+            # Create month path folder if not exists
+            if not os.path.exists(month_path):
+                os.makedirs(month_path)
+                print("Created folder:", month_path)
+
+            copy2(image["image"], month_path)
+
+        else:
+            copy2(image["image"], unfinished_path)
 
 def startSort(FOLDERS):
     """ Initiates the sort """
@@ -101,7 +135,7 @@ def startSort(FOLDERS):
     mime = magic.Magic(mime=True)
 
     if not os.listdir(FOLDERS["unsortedFolder"]):
-        print("empty!")
+        print("The folder is empty, please dump your photos and videos there.")
     else:
         for dirname, dirnames, filenames in os.walk(FOLDERS["unsortedFolder"]):
             for filename in filenames:
@@ -112,6 +146,9 @@ def startSort(FOLDERS):
                         })
                 if "video" in mime.from_file(os.path.join(dirname, filename)):
                     videos.append({"video": os.path.join(dirname, filename)})
+        print(images)
+        print(videos)
 
-    print(images)
-    print(videos)
+        print("I will now start with the images. Press something...")
+        create_structure_and_copy(FOLDERS, images)
+        print("I will now start with the videos. Press something...")
