@@ -29,12 +29,12 @@ def setup_folders(FOLDERS):
 
     for folder in sorted(FOLDERS.keys()):
 
-        ff = helpers.remove_illegal_chars(input("Folder name for " + folder + "? (Enter for default) "))
-
-        if ff is "":
-            input("### Leaving " + folder + " folder as default. Press Enter. ###")
-        else:
-            FOLDERS[folder] = ff
+        # ff = helpers.remove_illegal_chars(input("Folder name for " + folder + "? (Enter for default) "))
+        #
+        # if ff is "":
+        #     input("### Leaving " + folder + " folder as default. Press Enter. ###")
+        # else:
+        #     FOLDERS[folder] = ff
 
         if folder == "baseFolder" or folder == "unsortedFolder":
             create_folders(FOLDERS[folder])

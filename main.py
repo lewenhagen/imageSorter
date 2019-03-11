@@ -37,11 +37,11 @@ def menu():
     Unsorted images:        Unsorted/
     """)
 
-    print("1) Setup folders. Press Enter for default")
-    print("2) View default FOLDER")
-    print("3) Scan folder")
-    print("4) Start the magic!")
-    print("R) Remove baseFolder")
+    # print("1) Setup folders. Press Enter for default")
+    # print("2) View default FOLDER")
+    print("1) Start!")
+    print("2) Scan folder")
+    print("R) Empty Result-folder")
     print("q) Quit program")
 
 
@@ -57,20 +57,20 @@ def main():
             print("Bye.")
             return
 
+        # elif choice == "1":
+        #     setup.setup_folders(FOLDERS)
+        #
+        # elif choice == "2":
+        #     for i in sorted(FOLDERS.keys()):
+        #         print(i, "=", FOLDERS[i])
+
         elif choice == "1":
             setup.setup_folders(FOLDERS)
-
+            functions.start_sort(FOLDERS)
+        #
         elif choice == "2":
-            for i in sorted(FOLDERS.keys()):
-                print(i, "=", FOLDERS[i])
-
-        elif choice == "3":
             print("\n### Available folders ###\n")
             functions.present_folders(FOLDERS)
-
-        elif choice == "4":
-            # print("\n### Available folders ###\n")
-            functions.start_sort(FOLDERS)
 
         elif choice == "R":
             setup.remove_folder(FOLDERS["baseFolder"])
