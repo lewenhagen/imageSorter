@@ -30,20 +30,20 @@ MONTHS = {
     "12": "December",
 }
 
-def presentFolders(FOLDERS):
+def present_folders(FOLDERS):
 
     """ Presents folders to scan """
 
-    sortedFolders = dict()
+    sorted_folders = dict()
 
     for i, x in enumerate(sorted(FOLDERS.keys())):
-        sortedFolders[str(i)] = x
+        sorted_folders[str(i)] = x
         print(str(i) + ")", x)
 
     while True:
         try:
             scan_me = input("Folder to scan: ")
-            scan_folder(FOLDERS, sortedFolders[scan_me])
+            scan_folder(FOLDERS, sorted_folders[scan_me])
             break
         except ValueError:
             print("Not a number. Try again.")
@@ -60,13 +60,13 @@ def scan_folder(FOLDERS, scan_me):
 
     nr_of_folders = 0
     nr_of_files = 0
-    folderPath = FOLDERS[scan_me]
+    folder_path = FOLDERS[scan_me]
     structure = []
 
     if scan_me not in ("baseFolder", "unsortedFolder"):
-        folderPath = FOLDERS["baseFolder"] + "/" + FOLDERS[scan_me]
+        folder_path = FOLDERS["baseFolder"] + "/" + FOLDERS[scan_me]
 
-    for dirname, dirnames, filenames in os.walk(folderPath):
+    for dirname, dirnames, filenames in os.walk(folder_path):
         for subdirname in dirnames:
             structure.append(os.path.join(dirname, subdirname))
             nr_of_folders += 1
@@ -75,12 +75,12 @@ def scan_folder(FOLDERS, scan_me):
             structure.append(os.path.join(dirname, filename))
             nr_of_files += 1
 
-    print("Folder '" + folderPath + "' contains", str(nr_of_folders), "subfolders and", str(nr_of_files), "files.")
+    print("Folder '" + folder_path + "' contains", str(nr_of_folders), "subfolders and", str(nr_of_files), "files.")
 
     print_structure = input("View structure? [y/N] ").lower()
 
     if print_structure in ("y", "yes"):
-        os.system("tree " + folderPath)
+        os.system("tree " + folder_path)
         # print(*structure, sep="\n")
 
 
@@ -128,7 +128,7 @@ def create_structure_and_copy(FOLDERS, images):
         else:
             copy2(image["image"], unfinished_path)
 
-def startSort(FOLDERS):
+def start_sort(FOLDERS):
     """ Initiates the sort """
     images = []
     videos = []

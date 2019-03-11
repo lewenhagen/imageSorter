@@ -66,11 +66,11 @@ def main():
 
         elif choice == "3":
             print("\n### Available folders ###\n")
-            functions.presentFolders(FOLDERS)
+            functions.present_folders(FOLDERS)
 
         elif choice == "4":
             # print("\n### Available folders ###\n")
-            functions.startSort(FOLDERS)
+            functions.start_sort(FOLDERS)
 
         elif choice == "R":
             setup.remove_folder(FOLDERS["baseFolder"])
